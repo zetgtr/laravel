@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\InfoController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\WelcomeController;
@@ -22,6 +23,12 @@ Route::get('/name/{name}', [WelcomeController::class, "show"]);
 
 Route::get('/info', [InfoController::class,"index"]);
 
-Route::get('/news/', [NewsController::class, "index"]);
+Route::get('/news/{id}', [NewsController::class, "index"])
+    ->name('news');
 
-Route::get('/news/show/{id}', [NewsController::class, "show"]);
+Route::get('/category/', [CategoryController::class, "index"])
+    ->name('category');
+
+Route::get('/news/show/{id}', [NewsController::class, "show"])
+    ->where('id','\d+')
+    ->name('news.show');
