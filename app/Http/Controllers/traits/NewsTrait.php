@@ -12,27 +12,25 @@ trait NewsTrait
         {
             for($i=1;$i<$countCategories;$i++)
             {
-                $categories[$i] = [
+                $categories[] = [
                     'id'=>$i,
                     'title'=>\fake()->jobTitle(),
-                    'description'=>\fake()->text(100)
                 ];
             }
         }else{
             $categories[] = [
                 'id'=>$id,
                 'title'=>\fake()->jobTitle(),
-                'description'=>\fake()->text(100)
             ];
         }
         return $categories;
     }
-    public function getNewsCategory(array $news,int $id):array
+    public function getNewsCategory(array $news,int|null $id):array
     {
         $data = array();
         foreach ($news as $n)
         {
-            if($n['id_categories'] == $id)
+            if($n['id_categories'] == $id || is_null($id))
             {
                 $data[] = $n;
             }
@@ -58,11 +56,11 @@ trait NewsTrait
                 ];
             }
         }else{
-            $news[] = [
+            $news = [
                 'id'=>$id,
                 'author'=>\fake()->userName(),
                 'title'=>\fake()->jobTitle(),
-                'description'=>\fake()->text(100),
+                'description'=>\fake()->text(1000),
                 'created_at'=>\now()->format('d.m.Y H:i')
             ];
         }

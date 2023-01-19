@@ -11,6 +11,6 @@ class CategoryController extends Controller
 
     public function index()
     {
-        return \view('news.category',['categorys'=>$this->getCategories()]);
+//        return \view('news.category',['categorys'=>]);
     }
 }
