@@ -49,6 +49,7 @@ trait NewsTrait
                 $news[$i] = [
                     'id'=>$i,
                     'id_categories' => $i % 5 === 1 ? ++$categoryId : $categoryId,
+                    'publish' => $i % 7 === 1,
                     'author'=>\fake()->userName(),
                     'title'=>\fake()->jobTitle(),
                     'description'=>\fake()->text(100),
