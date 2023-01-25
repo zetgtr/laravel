@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\traits\NewsTrait;
@@ -14,10 +16,5 @@ class IndexController extends Controller
     public function index(): Factory|View|Application
     {
        return \view("home", ['news'=>$this->getNewsCategory($this->getNews(), null), 'category'=>$this->getCategories()]);
-    }
-
-    public function show(string $name): string
-    {
-        return \view("home",['name'=>$name]);
     }
 }

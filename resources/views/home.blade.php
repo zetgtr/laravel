@@ -48,7 +48,6 @@
         </div>
     </div>
 
-    <script src="{{ asset('assets/js/home/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/home/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('assets/js/home/main.js') }}"></script>
 @endsection

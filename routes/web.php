@@ -29,11 +29,17 @@ Route::group(['prefix'=>""],static function(){
     Route::get('/', [HomeController::class, "index"])
         ->name('home');
 
-    Route::get('/info', [InfoController::class,"index"])
+    Route::get('/info', [InfoController::class,"index" ])
         ->name('info');
+
+    Route::post('/info/store', [InfoController::class,"store"])
+        ->name('info.store');
 
     Route::get('/news/{id}', [NewsController::class, "index"])
         ->name('news');
+
+    Route::post('/news/store', [NewsController::class, "store"])
+        ->name('news.store');
 
     Route::get('/news/show/{id}', [NewsController::class, "show"])
         ->where('id','\d+')

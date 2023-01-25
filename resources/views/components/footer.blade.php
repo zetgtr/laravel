@@ -1,3 +1,5 @@
+<link href={{ asset("assets/css/style.css") }} rel="stylesheet" crossorigin="anonymous">
+
 <footer id="footer">
     <div id="bottom-footer" class="section">
         <div class="container">
