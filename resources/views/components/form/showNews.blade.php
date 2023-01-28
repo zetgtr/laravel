@@ -14,7 +14,7 @@
         <input id="email" class="form-control" name="email" type="email" required value="{{ old('phone') }}">
     </div>
     <div class="mb-3">
-        <label class="text-black" for="info">Введите информацию о том, что он хочете получить</label>
+        <label class="text-black" for="info">Введите информацию о том, что хочете получить</label>
         <textarea id="info" class="form-control" name="info" required type="text">{{ old('info') }}</textarea>
     </div>
 </form>

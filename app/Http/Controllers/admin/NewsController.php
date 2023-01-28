@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\News;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -18,7 +19,9 @@ class NewsController extends Controller
      */
     public function index(): View
     {
-        return \view('admin.news.index');
+        $newsModel = new News();
+        $newsList = $newsModel->getNewsAll();
+        return \view('admin.news.index', ['newsList'=>$newsList]);
     }
 
     /**

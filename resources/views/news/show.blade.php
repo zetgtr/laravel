@@ -3,11 +3,6 @@
     <x-menu :category="$category"></x-menu>
 @endsection
 @section('content')
-    @if($status)
-        <div class="container">
-            <x-alert :type="$status" message="Вы успешно оставии заявку"></x-alert>
-        </div>
-    @endif
     <section class="u-clearfix u-section-1 h-100" id="carousel_787e">
         <div class="u-clearfix u-expanded-width u-layout-wrap h-100">
             <div class="u-layout h-100">
@@ -17,6 +12,9 @@
                     </div>
                     <div class="u-container-style col-lg-7 u-layout-cell u-size-25 u-layout-cell-2">
                         <div class="u-container-layout u-valign-middle u-container-layout-2">
+                            @if($status)
+                                <x-alert :type="$status" message="Вы успешно оставии заявку"></x-alert>
+                            @endif
                             <h6 class="u-custom-font u-text u-text-font u-text-1">Every Mind Matters</h6>
                             <h1 class="u-text u-text-2">Do not</h1>
                             <h3 class="u-text u-text-3"> stay glued to the news</h3>

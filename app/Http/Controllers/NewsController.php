@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\traits\NewsTrait;;
+
+use App\Models\News;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -12,10 +14,11 @@ use Illuminate\Http\Request;
 class NewsController extends Controller
 {
     use NewsTrait;
-    public function index(int $id = null): View
+    public function index(int $id): View
     {
+        $newsClass = new News();
         return \view('news.news', [
-            'news'=>$this->getNewsCategory($this->getNews(), $id),
+            'news'=>$newsClass->getCategoryNews($id),
             'id' => $id,
             'category'=>$this->getCategories()
         ]);
