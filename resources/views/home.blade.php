@@ -15,14 +15,14 @@
                             <div class="section-title">
                                 <h2 class="title">Новости</h2>
                             </div>
-                            <x-home.news_big :news="$news[0]"></x-home.news_big>
+                            <x-home.news_big :news="$news[rand(0,24)]"></x-home.news_big>
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <!-- section title -->
                             <div class="section-title">
                                 <h2 class="title">Спорт</h2>
                             </div>
-                            <x-home.news_big :news="$news[1]"></x-home.news_big>
+                            <x-home.news_big :news="$sport[rand(0,4)]"></x-home.news_big>
                         </div>
                     </div>
                     <div class="row">
@@ -33,10 +33,10 @@
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-6">
-                            <x-home.news_big :news="$news[2]"></x-home.news_big>
+                            <x-home.news_big :news="$news[rand(0,24)]"></x-home.news_big>
                         </div>
                         <div class="col-md-6 col-sm-6">
-                            <x-home.news_big :news="$news[3]"></x-home.news_big>
+                            <x-home.news_big :news="$news[rand(0,24)]"></x-home.news_big>
                         </div>
                     </div>
                     <div class="row">

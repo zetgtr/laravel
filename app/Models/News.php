@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -16,30 +17,21 @@ class News extends Model
 
     protected $table = 'news';
 
-    public function getNewsAll(): Collection
-    {
-        return \DB::table($this->table)->get();
-    }
+    protected $fillable = [
+        'title',
+        'author',
+        'status',
+        'img',
+        'description',
+    ];
 
-    public function getCategoryNews(int $id): Collection
-    {
-        return DB::table('news')
-            ->select([
-                'news.id AS id',
-                'news.title AS title',
-                'news.description AS description',
-                'news.author AS author',
-                'news.img AS img',
-                'news.created_at AS created_at'
-            ])
-            ->join('categories_has_news AS chn','news.id','=', 'chn.news_id')
-            ->join('categories', 'chn.category_id', '=', 'categories.id')
-            ->where('chn.category_id','=',$id)
-            ->get();
-    }
+    protected $casts = [
+        'categories_id' => 'array',
+    ];
 
-    public function getNewsById(): mixed
+    public function categories(): BelongsToMany
     {
-        return DB::select();
+        return $this->belongsToMany(Category::class, 'categories_has_news',
+            'news_id', 'category_id', 'id', 'id');
     }
 }

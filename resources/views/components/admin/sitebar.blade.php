@@ -8,7 +8,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link @if(request()->routeIs('admin.categories.*')) active @endif" href="#">
+                <a class="nav-link @if(request()->routeIs('admin.category.*')) active @endif" href="{{ route('admin.category.index') }}">
                     <span data-feather="file" class="align-text-bottom"></span>
                     Категории
                 </a>

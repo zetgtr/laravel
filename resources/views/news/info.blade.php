@@ -1,4 +1,7 @@
 @extends('layouts.main')
+@section('menu')
+    <x-menu :category="$category"></x-menu>
+@endsection
 @section('content')
     <section class="u-clearfix u-grey-90 u-section-1" id="carousel_9d0a">
 

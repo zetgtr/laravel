@@ -6,6 +6,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\traits\NewsTrait;
 use App\Models\News;
+use App\QueryBuilder\CategoriesBuilder;
+use App\QueryBuilder\NewsBuilder;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -13,10 +15,8 @@ use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
-    use NewsTrait;
-    public function index(): Factory|View|Application
+    public function index(NewsBuilder $newsBuilder, CategoriesBuilder $categoriesBuilder): View
     {
-        $newsClass = new News();
-        return \view("home", ['news'=>$newsClass->getCategoryNews(2), 'category'=>$this->getCategories()]);
+        return \view("home", ['news'=>$newsBuilder->getAll(),'sport'=>$newsBuilder->getCategoriesNews(3), 'category'=>$categoriesBuilder->getAll()]);
     }
 }
