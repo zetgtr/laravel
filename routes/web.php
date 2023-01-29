@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\admin\IndexController as AdminController;
+use \App\Http\Controllers\admin\NewsController as AdminNewsController;
+use App\Http\Controllers\IndexController as HomeController;
 use App\Http\Controllers\InfoController;
 use App\Http\Controllers\NewsController;
-use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,18 +18,28 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['prefix'=>"admin"],static function(){
+Route::group(['prefix'=>"admin", 'as'=>'admin.'],static function(){
     Route::get("/", AdminController::class)
-        ->name('admin.index');
+        ->name('index');
+    Route::resource('category', AdminCategoryController::class);
+    Route::resource('news', AdminNewsController::class);
 });
 
 Route::group(['prefix'=>""],static function(){
-    Route::get('/', [NewsController::class, "index"]);
+    Route::get('/', [HomeController::class, "index"])
+        ->name('home');
 
-    Route::get('/info', [InfoController::class,"index"]);
+    Route::get('/info', [InfoController::class,"index" ])
+        ->name('info');
+
+    Route::post('/info/store', [InfoController::class,"store"])
+        ->name('info.store');
 
     Route::get('/news/{id}', [NewsController::class, "index"])
         ->name('news');
+
+    Route::post('/news/store', [NewsController::class, "store"])
+        ->name('news.store');
 
     Route::get('/news/show/{id}', [NewsController::class, "show"])
         ->where('id','\d+')

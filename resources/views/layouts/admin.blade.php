@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="{{  asset("assets/css/admin/bootstrap.min.css") }}" rel="stylesheet" crossorigin="anonymous">
+    <link href="{{  asset("assets/css/bootstrap.min.css") }}" rel="stylesheet" crossorigin="anonymous">
 
     <!-- Favicons -->
     <meta name="theme-color" content="#712cf9">

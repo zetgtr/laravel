@@ -14,3 +14,17 @@ main {
 footer {
     flex: 0 0 auto;
 }
+
+.btn-about{
+    background-color: burlywood;
+}
+
+.btn-about:hover{
+    background-color: green;
+}
+
+.show_news_swg{
+    width: 90px;
+    cursor: pointer;
+}
+
