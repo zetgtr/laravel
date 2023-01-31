@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -12,8 +14,13 @@ class NewsSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
-        //
+        \DB::table('news')->insert($this->getData());
+    }
+
+    public function getData(): array
+    {
+       return json_decode(file_get_contents(__DIR__.'/../damps/news.json'), true);
     }
 }

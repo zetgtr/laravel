@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\QueryBuilder;
 
-use App\Models\Category;
 use App\Models\News;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -28,7 +26,7 @@ final class NewsBuilder extends QueryBuilder
 
     public function getNewsWithPagination(int $quantity = 10): LengthAwarePaginator
     {
-        return $this->model->with('categories')->paginate($quantity);
+        return $this->model->with('categories')->orderByDesc('id')->paginate($quantity);
     }
 
     public function get(int $id): Collection
@@ -36,7 +34,7 @@ final class NewsBuilder extends QueryBuilder
         return $this->model->where('id', $id)->get();
     }
 
-    public function getCategoriesNews(int $id)
+    public function getCategoriesNews(int $id): Collection
     {
         return $this->model
             ->join('categories_has_news','news_id','=', 'news.id')

@@ -20,7 +20,7 @@ final class CategoriesBuilder extends QueryBuilder
 
     public function getCategoriesWithPagination(int $quantity = 10): LengthAwarePaginator
     {
-        return $this->model->paginate($quantity);
+        return $this->model->orderByDesc('id')->paginate($quantity);
     }
 
     public function getAll(): Collection
