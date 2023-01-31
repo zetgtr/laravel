@@ -15,8 +15,14 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link @if(request()->routeIs('admin.news.*')) active @endif" href="{{ route('admin.news.index') }}">
-                    <span data-feather="shopping-cart" class="align-text-bottom"></span>
+                    <span data-feather="align-justify" class="align-text-bottom"></span>
                     Новости
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link  @if(request()->routeIs('admin.form.*')) active @endif" href="{{ route('admin.form.index') }}">
+                    <span data-feather="bell" class="align-text-bottom"></span>
+                    Формы
                 </a>
             </li>
             <li class="nav-item">
