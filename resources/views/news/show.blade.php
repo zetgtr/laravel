@@ -12,8 +12,13 @@
                     </div>
                     <div class="u-container-style col-lg-7 u-layout-cell u-size-25 u-layout-cell-2">
                         <div class="u-container-layout u-valign-middle u-container-layout-2">
-                            @if($status)
-                                <x-alert :type="$status" message="Вы успешно оставии заявку"></x-alert>
+                            @if (session('success'))
+                                <x-alert type="success" message="{{ session('success') }}"></x-alert>
+                            @endif
+                            @if ($errors->any())
+                                @foreach($errors->all() as $error)
+                                    <x-alert type="danger" :message="$error"></x-alert>
+                                @endforeach
                             @endif
                             <h6 class="u-custom-font u-text u-text-font u-text-1">Every Mind Matters</h6>
                             <h1 class="u-text u-text-2">Do not</h1>

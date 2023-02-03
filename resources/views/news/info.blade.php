@@ -8,8 +8,13 @@
         <div class="u-clearfix u-layout-wrap u-layout-wrap-1">
             <div class="u-layout">
                 <div class="u-layout-row">
-                    @if($status)
-                       <x-alert :type="$status" message="Вы успешно оставии отзыв"></x-alert>
+                    @if (session('success'))
+                        <x-alert type="success" message="{{ session('success') }}"></x-alert>
+                    @endif
+                    @if ($errors->any())
+                        @foreach($errors->all() as $error)
+                            <x-alert type="danger" :message="$error"></x-alert>
+                        @endforeach
                     @endif
                     <div class="u-container-style u-layout-cell align-items-center d-flex u-shape-rectangle u-size-36 u-layout-cell-1 row">
                         <div class="col-lg-7 u-container-layout u-valign-top-md u-valign-top-sm u-valign-top-xs u-container-layout-1">

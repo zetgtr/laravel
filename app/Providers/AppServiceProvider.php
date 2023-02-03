@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\QueryBuilder\CategoriesBuilder;
+use App\QueryBuilder\Forms\FeedbackBuilder;
+use App\QueryBuilder\Forms\UnloadingBuilder;
 use App\QueryBuilder\NewsBuilder;
 use App\QueryBuilder\QueryBuilder;
 use Illuminate\Pagination\Paginator;
@@ -21,6 +23,8 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(QueryBuilder::class, CategoriesBuilder::class);
         $this->app->bind(QueryBuilder::class, NewsBuilder::class);
+        $this->app->bind(QueryBuilder::class, FeedbackBuilder::class);
+        $this->app->bind(QueryBuilder::class, UnloadingBuilder::class);
     }
 
     /**

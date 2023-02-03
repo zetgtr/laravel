@@ -18,7 +18,7 @@ return new class extends Migration
         Schema::create('unloadings', function (Blueprint $table) {
             $table->id();
             $table->string('user',60);
-            $table->integer('phone');
+            $table->bigInteger('phone');
             $table->string('email', 60);
             $table->text('info');
             $table->timestamps();

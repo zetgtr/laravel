@@ -1,4 +1,4 @@
-<form method="POST" id="about" action="{{ route('info.store') }}">
+<form method="POST" id="about" action="{{ route('admin.form.feedback.store') }}">
     @csrf
     <div class="mb-3">
         <label class="text-black" for="user">Представтесь</label>
