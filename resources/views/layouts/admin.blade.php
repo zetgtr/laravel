@@ -4,9 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <link href="{{  asset("assets/css/bootstrap.min.css") }}" rel="stylesheet" crossorigin="anonymous">
-
+    <script src="{{ asset('assets/js/home/jquery.min.js') }}"></script>
     <!-- Favicons -->
     <meta name="theme-color" content="#712cf9">
 
@@ -33,5 +34,6 @@
 <script src="{{ asset('assets/js/admin/feather.min.js') }}" crossorigin="anonymous"></script>
 <script src="{{ asset('assets/js/admin/Chart.min.js') }}" crossorigin="anonymous"></script>
 <script src="{{ asset('assets/js/admin/dashboard.js') }}"></script>
+
 </body>
 </html>

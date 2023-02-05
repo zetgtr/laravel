@@ -16,6 +16,11 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
+        \DB::table('categories')->insert($this->getData());
+    }
 
+    public function getData(): array
+    {
+        return json_decode(file_get_contents(__DIR__.'/../damps/categories.json'), true);
     }
 }

@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\admin\forms\FeedbackController as AdminFeedbackController;
+use App\Http\Controllers\admin\forms\UnloadingController as AdminUnloadingController;
+use App\Http\Controllers\admin\FormsController;
 use App\Http\Controllers\admin\IndexController as AdminController;
 use \App\Http\Controllers\admin\NewsController as AdminNewsController;
 use App\Http\Controllers\IndexController as HomeController;
@@ -19,10 +22,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::group(['prefix'=>"admin", 'as'=>'admin.'],static function(){
+
     Route::get("/", AdminController::class)
         ->name('index');
+
+    Route::get("/form", FormsController::class)
+        ->name('form.index');
+
+    Route::group(['prefix'=> "form", 'as' =>'form.'],static function(){
+
+        Route::resource('feedback', AdminFeedbackController::class);
+
+        Route::resource('unloading', AdminUnloadingController::class);
+
+    });
+
     Route::resource('category', AdminCategoryController::class);
+
     Route::resource('news', AdminNewsController::class);
+
 });
 
 Route::group(['prefix'=>""],static function(){
