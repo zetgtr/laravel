@@ -1,11 +1,13 @@
 <?php
 
-use App\Http\Controllers\admin\CategoryController as AdminCategoryController;
-use App\Http\Controllers\admin\forms\FeedbackController as AdminFeedbackController;
-use App\Http\Controllers\admin\forms\UnloadingController as AdminUnloadingController;
-use App\Http\Controllers\admin\FormsController;
-use App\Http\Controllers\admin\IndexController as AdminController;
-use \App\Http\Controllers\admin\NewsController as AdminNewsController;
+declare(strict_types=1);
+
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\Forms\FeedbackController as AdminFeedbackController;
+use App\Http\Controllers\Admin\Forms\UnloadingController as AdminUnloadingController;
+use App\Http\Controllers\Admin\FormsController;
+use App\Http\Controllers\Admin\IndexController as AdminController;
+use \App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\IndexController as HomeController;
 use App\Http\Controllers\InfoController;
 use App\Http\Controllers\NewsController;
@@ -50,14 +52,8 @@ Route::group(['prefix'=>""],static function(){
     Route::get('/info', [InfoController::class,"index" ])
         ->name('info');
 
-    Route::post('/info/store', [InfoController::class,"store"])
-        ->name('info.store');
-
     Route::get('/news/{id}', [NewsController::class, "index"])
         ->name('news');
-
-    Route::post('/news/store', [NewsController::class, "store"])
-        ->name('news.store');
 
     Route::get('/news/show/{id}', [NewsController::class, "show"])
         ->where('id','\d+')

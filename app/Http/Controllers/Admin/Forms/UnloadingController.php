@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\admin\forms;
+namespace App\Http\Controllers\Admin\Forms;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Forms\UnloadingRequest;
 use App\Models\Forms\Unloading;
 use App\QueryBuilder\Forms\UnloadingBuilder;
 use Illuminate\Http\RedirectResponse;
@@ -29,18 +30,17 @@ class UnloadingController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param UnloadingRequest $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(UnloadingRequest $request): RedirectResponse
     {
-        $unloading = new Unloading($request->except('_token'));
-        if($unloading->save())
-        {
-            return \back()->with('success', 'Комментарий успешно оставлен');
+        $unloading = Unloading::create($request->validated());
+        if ($unloading) {
+            return \redirect()->route('info')->with('success', __('messages.admin.unloading.store.success'));
         }
-        return \back()->with('error', 'Не удалось сохранить запись');
 
+        return \back()->with('error', __('messages.admin.unloading.store.fail'));
     }
 
     /**
@@ -53,10 +53,10 @@ class UnloadingController extends Controller
     {
         try {
             $unloading->delete();
-            $request = ['status' => true,'message' => 'Запись успешно удалена'];
+            $request = ['status' => true,'message' => __('messages.admin.unloading.destroy.success')];
         }catch (Exception $exception)
         {
-            $request = ['status' => false, 'message' => $exception->getMessage()];
+            $request = ['status' => false, 'message' => __('messages.admin.unloading.destroy.success'). $exception->getMessage()];
         }
         return $request;
     }

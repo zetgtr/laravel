@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\admin\forms;
+namespace App\Http\Controllers\Admin\Forms;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Forms\FeedbackRequest;
 use App\Models\Forms\Feedback;
 use App\QueryBuilder\Forms\FeedbackBuilder;
 use Illuminate\Http\RedirectResponse;
@@ -18,6 +19,7 @@ class FeedbackController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param FeedbackBuilder $feedbackBuilder
      * @return View
      */
     public function index(FeedbackBuilder $feedbackBuilder) : View
@@ -28,17 +30,17 @@ class FeedbackController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param FeedbackRequest $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(FeedbackRequest $request): RedirectResponse
     {
-        $feedback = new Feedback($request->except('_token'));
-        if($feedback->save())
-        {
-            return redirect()->route('info')->with('success', 'Комментарий успешно оставлен');
+        $feedback = Feedback::create($request->validated());
+        if ($feedback) {
+            return \redirect()->route('info')->with('success', __('messages.admin.feedback.store.success') );
         }
-        return \back()->with('error', 'Не удалось сохранить запись');
+
+        return \back()->with('error', __('messages.admin.feedback.store.fail'));
     }
 
     /**
@@ -51,10 +53,10 @@ class FeedbackController extends Controller
     {
         try {
             $feedback->delete();
-            $request = ['status' => true,'message' => 'Запись успешно удалена'];
+            $request = ['status' => true,'message' => __('messages.admin.feedback.destroy.success')];
         }catch (Exception $exception)
         {
-            $request = ['status' => false, 'message' => $exception->getMessage()];
+            $request = ['status' => false, 'message' => __('messages.admin.feedback.destroy.fail').$exception->getMessage()];
         }
         return $request;
     }

@@ -2,7 +2,7 @@
     @csrf
     <input type="hidden" name="id" value="{{ $id }}">
     <div class="mb-3">
-        <label class="text-black" for="user">Представтесь</label>
+        <label class="text-black" for="user">Представитесь</label>
         <input id="user" class="form-control" name="user" type="text" required value="{{ old('user') }}">
     </div>
     <div class="mb-3">
@@ -11,7 +11,7 @@
     </div>
     <div class="mb-3">
         <label class="text-black" for="email">Ваш email</label>
-        <input id="email" class="form-control" name="email" type="email" required value="{{ old('phone') }}">
+        <input id="email" class="form-control" name="email" type="email" required value="{{ old('email') }}">
     </div>
     <div class="mb-3">
         <label class="text-black" for="info">Введите информацию, которую хотите получить</label>

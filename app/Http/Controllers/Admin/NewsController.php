@@ -6,6 +6,8 @@ namespace App\Http\Controllers\admin;
 
 use App\Enums\NewsStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\News\CreateRequest;
+use App\Http\Requests\News\EditRequest;
 use App\Models\News;
 use App\QueryBuilder\CategoriesBuilder;
 use App\QueryBuilder\NewsBuilder;
@@ -13,6 +15,8 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Validation\Rules\Enum;
+use PHPUnit\Exception;
 
 class NewsController extends Controller
 {
@@ -46,23 +50,18 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param CreateRequest $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(CreateRequest $request): RedirectResponse
     {
-        $request->validate([
-            'title' => 'required',
-        ]);
-
-        $news = new News($request->except('_token', 'category_id')); //News::create();
-
-        if ($news->save()) {
-            $news->categories()->sync((array) $request->input('category_ids'));
-            return \redirect()->route('admin.news.index')->with('success', 'Новость успешно добавлена');
+        $news = News::create($request->validated());
+        if ($news) {
+            $news->categories()->attach($request->getCategoriesIds());
+            return \redirect()->route('admin.news.index')->with('success', __('messages.admin.news.store.success'));
         }
 
-        return \back()->with('error', 'Не удалось сохранить запись');
+        return \back()->with('error', __('messages.admin.news.store.fail'));
     }
 
     /**
@@ -84,19 +83,19 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param EditRequest $request
      * @param News $news
      * @return RedirectResponse
      */
-    public function update(Request $request, News $news): RedirectResponse
+    public function update(EditRequest $request, News $news): RedirectResponse
     {
-        $news = $news->fill($request->except('_token', 'category_ids'));
+        $news = $news->fill($request->validated());
         if ($news->save()) {
-            $news->categories()->sync((array) $request->input('category_ids'));
-            return \redirect()->route('admin.news.index')->with('success', 'Новость успешно обновлена');
+            $news->categories()->sync($request->getCategoriesIds());
+            return \redirect()->route('admin.news.index')->with('success', __('messages.admin.news.update.success'));
         }
 
-        return \back()->with('error', 'Не удалось сохранить запись');
+        return \back()->with('error', __('messages.admin.news.update.fail'));
     }
 
     /**
@@ -108,9 +107,14 @@ class NewsController extends Controller
 
     public function destroy(News $news): array
     {
-        if($news->delete())
-            return ['status' => true,'message' => 'Запись успешно удалена'];
-        else
-            return ['status' => false,'message' => 'Ошибка удаления'];
+        try {
+            $news->delete();
+            $response = ['status' => true,'message' => __('messages.admin.news.destroy.success')];
+        } catch (Exception $exception)
+        {
+            $response = ['status' => false,'message' => __('messages.admin.news.destroy.fail').$exception->getMessage()];
+        }
+
+        return $response;
     }
 }

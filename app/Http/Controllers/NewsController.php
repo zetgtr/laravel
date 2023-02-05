@@ -29,14 +29,4 @@ class NewsController extends Controller
             'status'=> $request->query('status'),
             'category'=>$categoriesBuilder->getAll()]);
     }
-
-    public function store(Request $request): RedirectResponse
-    {
-        $message = "Пользователь: ".$request->get('user')."\n".
-            "Телефон: ".$request->get('phone')."\n".
-            "email: ".$request->get('email')."\n".
-            "Информация: ".$request->get('info');
-        file_put_contents('newsSow.txt', $message);
-        return redirect()->route('news.show', ['id' => $request->get('id'), 'status'=>'success']);
-    }
 }
