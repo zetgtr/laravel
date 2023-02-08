@@ -9,6 +9,7 @@ use App\QueryBuilder\Forms\FeedbackBuilder;
 use App\QueryBuilder\Forms\UnloadingBuilder;
 use App\QueryBuilder\NewsBuilder;
 use App\QueryBuilder\QueryBuilder;
+use App\QueryBuilder\UsersBuilder;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(QueryBuilder::class, NewsBuilder::class);
         $this->app->bind(QueryBuilder::class, FeedbackBuilder::class);
         $this->app->bind(QueryBuilder::class, UnloadingBuilder::class);
+        $this->app->bind(QueryBuilder::class, UsersBuilder::class);
     }
 
     /**

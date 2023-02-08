@@ -10,6 +10,7 @@ use App\QueryBuilder\CategoriesBuilder;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use PHPUnit\Exception;
 
 class CategoryController extends Controller
 {
@@ -52,21 +53,10 @@ class CategoryController extends Controller
         $category = new Category($request->except('_token'));
 
         if ($category->save()) {
-            return \redirect()->route('admin.category.index')->with('success', 'Новость успешно добавлена');
+            return \redirect()->route('admin.category.index')->with('success', __('messages.admin.category.store.success'));
         }
 
-        return \back()->with('error', 'Не удалось сохранить запись');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return \back()->with('error', __('messages.admin.category.store.fail'));
     }
 
     /**
@@ -93,10 +83,10 @@ class CategoryController extends Controller
     {
         $category = $category->fill($request->except('_token'));
         if ($category->save()) {
-            return \redirect()->route('admin.category.index')->with('success', 'Категория успешно обновлена');
+            return \redirect()->route('admin.category.index')->with('success', __('messages.admin.category.update.success'));
         }
 
-        return \back()->with('error', 'Не удалось сохранить запись');
+        return \back()->with('error', __('messages.admin.category.update.fail'));
     }
 
     /**
@@ -107,9 +97,14 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category): array
     {
-        if($category->delete())
-            return ['status' => true,'message' => 'Запись успешно удалена'];
-        else
-            return ['status' => false,'message' => 'Ошибка удаления'];
+        try {
+            $category->delete();
+            $response = ['status' => true,'message' => __('messages.admin.category.destroy.success')];
+        } catch (Exception $exception)
+        {
+            $response = ['status' => false,'message' => __('messages.admin.category.destroy.fail').$exception->getMessage()];
+        }
+
+        return $response;
     }
 }

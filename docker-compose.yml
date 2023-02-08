@@ -17,7 +17,7 @@ services:
         volumes:
             - '.:/application'
         environment:
-            - MYSQL_ROOT_PASSWORD=admin
+            - MYSQL_ROOT_PASSWORD=Admin
             - MYSQL_DATABASE=news
             - MYSQL_USER=user
             - MYSQL_PASSWORD=root

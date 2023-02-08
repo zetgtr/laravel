@@ -19,7 +19,7 @@
             @method('put')
             <div class="mb-3">
                 <label for="category_ids">Категория</label>
-                <select class="form-control" name="category_ids[]" id="category_ids" multiple>
+                <select class="form-control @error('category_ids') is-invalid @enderror" name="category_ids[]" id="category_ids" multiple>
                     <option value="0">--Выбрать--</option>
                     @foreach($categories as $category)
                         <option @if(in_array($category->id, $news->categories->pluck('id')->toArray())) selected @endif value="{{ $category->id }}">{{ $category->title }}</option>
@@ -28,15 +28,15 @@
             </div>
             <div class="mb-3">
                 <label for="title">Заголовок</label>
-                <input type="text" id="title" name="title" value="{{ $news->title }}" class="form-control">
+                <input type="text" id="title" name="title" value="{{ $news->title }}" class="form-control @error('title') is-invalid @enderror">
             </div>
             <div class="mb-3">
                 <label for="author">Автор</label>
-                <input type="text" id="author" name="author" value="{{ $news->author }}" class="form-control">
+                <input type="text" id="author" name="author" value="{{ $news->author }}" class="form-control @error('author') is-invalid @enderror">
             </div>
             <div class="mb-3">
                 <label for="status">Статус</label>
-                <select class="form-control" name="status" id="status">
+                <select class="form-control @error('status') is-invalid @enderror" name="status" id="status">
                     @foreach($statuses as $status)
                         <option @if($news->status === $status) selected @endif>{{ $status}}</option>
                     @endforeach
@@ -44,12 +44,12 @@
             </div>
 
             <div class="mb-3">
-                <label for="image">Изображение</label>
-                <input type="file" id="image" name="image" class="form-control">
+                <label for="img">Изображение</label>
+                <input type="file" id="img" name="img" class="form-control @error('img') is-invalid @enderror">
             </div>
             <div>
                 <label for="description">Описание</label>
-                <textarea class="form-control" id="description" name="description">{!! $news->description !!}</textarea>
+                <textarea class="form-control" id="description @error('description') is-invalid @enderror" name="description">{!! $news->description !!}</textarea>
             </div>
 
             <br>
