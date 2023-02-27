@@ -1,15 +1,13 @@
 <?php
 
-use App\Http\Controllers\admin\CategoryController as AdminCategoryController;
-use App\Http\Controllers\admin\forms\FeedbackController as AdminFeedbackController;
-use App\Http\Controllers\admin\forms\UnloadingController as AdminUnloadingController;
-use App\Http\Controllers\admin\FormsController;
-use App\Http\Controllers\admin\IndexController as AdminController;
-use \App\Http\Controllers\admin\NewsController as AdminNewsController;
-use App\Http\Controllers\IndexController as HomeController;
-use App\Http\Controllers\InfoController;
-use App\Http\Controllers\NewsController;
+use App\Http\Controllers\Admin\IndexController as AdminController;
+use App\Http\Controllers\Admin\RolesController as AdminRolesController;
+use App\Http\Controllers\Admin\SettingsMenuController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Auth\SocialController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,50 +15,33 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::group(['prefix'=>"admin", 'as'=>'admin.'],static function(){
 
-    Route::get("/", AdminController::class)
-        ->name('index');
+Route::get('/', function () {
+    return view('welcome');
+})->name('home');
 
-    Route::get("/form", FormsController::class)
-        ->name('form.index');
-
-    Route::group(['prefix'=> "form", 'as' =>'form.'],static function(){
-
-        Route::resource('feedback', AdminFeedbackController::class);
-
-        Route::resource('unloading', AdminUnloadingController::class);
-
+Route::middleware('auth')->group(function () {
+    Route::group(['prefix'=>"admin", 'as'=>'admin.', 'middleware' => 'is_admin'],static function(){
+        Route::get("/", AdminController::class)
+            ->name('index');
+//        Route::get('user', )
+        Route::group(['prefix' => 'settings', 'as' => 'settings.'], static function(){
+            Route::resource('menu', SettingsMenuController::class);
+            Route::post('menu/order', [SettingsMenuController::class,'menuOrder'])->name('menu.order');
+        });
+        Route::resource('user', AdminUserController::class);
+        Route::resource('roles', AdminRolesController::class);
     });
-
-    Route::resource('category', AdminCategoryController::class);
-
-    Route::resource('news', AdminNewsController::class);
-
 });
 
-Route::group(['prefix'=>""],static function(){
-    Route::get('/', [HomeController::class, "index"])
-        ->name('home');
-
-    Route::get('/info', [InfoController::class,"index" ])
-        ->name('info');
-
-    Route::post('/info/store', [InfoController::class,"store"])
-        ->name('info.store');
-
-    Route::get('/news/{id}', [NewsController::class, "index"])
-        ->name('news');
-
-    Route::post('/news/store', [NewsController::class, "store"])
-        ->name('news.store');
-
-    Route::get('/news/show/{id}', [NewsController::class, "show"])
-        ->where('id','\d+')
-        ->name('news.show');
+Route::group(['middleware' => 'guest'], function (){
+    Route::get('/auth/redirect/{driver}', [SocialController::class, 'redirect'])
+        ->where('driver','\w+')
+        ->name('social.auth.redirect');
+    Route::get('/auth/callback/{driver}', [SocialController::class, 'callback'])
+        ->where('driver','\w+');
 });
-

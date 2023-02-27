@@ -1,39 +1,33 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Providers;
 
-use App\QueryBuilder\CategoriesBuilder;
-use App\QueryBuilder\Forms\FeedbackBuilder;
-use App\QueryBuilder\Forms\UnloadingBuilder;
-use App\QueryBuilder\NewsBuilder;
+use App\QueryBuilder\MenuBuilder;
 use App\QueryBuilder\QueryBuilder;
-use Illuminate\Pagination\Paginator;
+use App\QueryBuilder\RolesBuilder;
+use App\QueryBuilder\UsersBuilder;
+use App\Services\Contacts\Social;
+use App\Services\SocialService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
-     *
-     * @return void
      */
     public function register(): void
     {
-        $this->app->bind(QueryBuilder::class, CategoriesBuilder::class);
-        $this->app->bind(QueryBuilder::class, NewsBuilder::class);
-        $this->app->bind(QueryBuilder::class, FeedbackBuilder::class);
-        $this->app->bind(QueryBuilder::class, UnloadingBuilder::class);
+        $this->app->bind(Social::class, SocialService::class);
+        $this->app->bind(QueryBuilder::class, UsersBuilder::class);
+        $this->app->bind(QueryBuilder::class, RolesBuilder::class);
+        $this->app->bind(QueryBuilder::class, MenuBuilder::class);
     }
 
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
     public function boot(): void
     {
-        Paginator::useBootstrapFour();
+        //
     }
 }
